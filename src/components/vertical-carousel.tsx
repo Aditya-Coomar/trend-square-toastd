@@ -1,40 +1,115 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
+
 interface VerticalCarouselProps {
   items: string[];
 }
 
 const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ items }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = React.useState<boolean>(true);
+  const [fullDescription, setFullDescription] = React.useState<any>(null);
+  
+  // Create refs for all videos
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  useEffect(() => {
+    // Initialize the refs array
+    videoRefs.current = videoRefs.current.slice(0, items.length);
+
+    // Create intersection observer
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target as HTMLVideoElement;
+          
+          if (entry.isIntersecting) {
+            // Play video when it enters viewport
+            video.play();
+            // Ensure video takes full viewport height
+            const adjustVideoSize = () => {
+              const viewport = window.innerHeight;
+              const videoHeight = video.videoHeight;
+              const videoWidth = video.videoWidth;
+              const aspectRatio = videoWidth / videoHeight;
+              
+              // Calculate new dimensions to cover viewport while maintaining aspect ratio
+              let newHeight = viewport;
+              let newWidth = viewport * aspectRatio;
+              
+              video.style.height = `${newHeight}px`;
+              video.style.width = `${newWidth}px`;
+              video.style.objectFit = 'cover';
+            };
+            
+            // Adjust size when metadata is loaded
+            if (video.readyState >= 1) {
+              adjustVideoSize();
+            } else {
+              video.addEventListener('loadedmetadata', adjustVideoSize);
+            }
+            
+            // Adjust on resize
+            window.addEventListener('resize', adjustVideoSize);
+          } else {
+            // Pause video when it exits viewport
+            video.pause();
+          }
+        });
+      },
+      {
+        threshold: 0.5, // Trigger when video is 50% visible
+      }
+    );
+
+    // Observe all video elements
+    videoRefs.current.forEach((videoRef) => {
+      if (videoRef) {
+        observer.observe(videoRef);
+      }
+    });
+
+    // Cleanup
+    return () => {
+      videoRefs.current.forEach((videoRef) => {
+        if (videoRef) {
+          observer.unobserve(videoRef);
+        }
+      });
+      window.removeEventListener('resize', () => {});
+    };
+  }, [items]);
+
   const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(videoRef.current.muted);
-    }
+    videoRefs.current.forEach((videoRef) => {
+      if (videoRef) {
+        videoRef.muted = !isMuted;
+      }
+    });
+    setIsMuted(!isMuted);
   };
+
   const description =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-  const [fullDescription, setFullDescription] = React.useState<any>(null);
+
   return (
     <div className="h-screen overflow-y-scroll scroll-snap-y scroll-snap-mandatory">
       {items.map((item: any, index: number) => (
         <div
           key={index}
-          className="h-screen scroll-snap-start flex justify-center items-center bg-black w-full border-b border-white"
+          className="h-screen scroll-snap-start flex justify-center items-center bg-black w-full border-b border-white relative"
         >
-          <div className="relative h-full w-full">
+          <div className="relative h-full w-full overflow-hidden">
             <video
-              ref={videoRef}
+              ref={(el:any) => (videoRefs.current[index] = el)}
               loop
-              className="h-full w-auto my-auto mx-auto"
               playsInline
               muted={isMuted}
-              autoPlay={true}
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full"
             >
-              <source src={item} type="video/mp4" />,
+              <source src={item} type="video/mp4" />
             </video>
             <div className="absolute top-0 left-0 text-white h-full w-full flex flex-col justify-between items-center bg-black bg-opacity-20 pb-6">
+              {/* Rest of your UI components remain the same */}
               <div className="flex justify-between items-center w-full">
                 <div></div>
                 <button
