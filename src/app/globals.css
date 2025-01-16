@@ -1,9 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Comfortaa", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  scroll-behavior: smooth !important;
 }
 
 @layer base {
@@ -69,4 +74,13 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.carousel-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
 }
