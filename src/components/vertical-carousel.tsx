@@ -1,16 +1,50 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { DialogNavigation } from "@/components/navigation";
 
 interface VerticalCarouselProps {
   items: string[];
 }
 
-const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ items }) => {
+const VerticalCarousel = () => {
+  const items = [
+    "/assets/video/video_5.mp4",
+    "/assets/video/video_1.mp4",
+    "/assets/video/video_2.mp4",
+    "/assets/video/video_3.mp4",
+    "/assets/video/video_4.mp4",
+  ];
+
   const [isMuted, setIsMuted] = React.useState<boolean>(true);
   const [fullDescription, setFullDescription] = React.useState<any>(null);
-  
+  const [playingStates, setPlayingStates] = React.useState<boolean[]>(
+    items.map(() => true)
+  );
+
   // Create refs for all videos
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  const togglePlayPause = (index: number) => {
+    const video = videoRefs.current[index];
+    if (video) {
+      if (video.paused) {
+        video.play();
+        setPlayingStates((prev) => {
+          const newStates = [...prev];
+          newStates[index] = true;
+          return newStates;
+        });
+      } else {
+        video.pause();
+        setPlayingStates((prev) => {
+          const newStates = [...prev];
+          newStates[index] = false;
+          return newStates;
+        });
+      }
+    }
+  };
 
   useEffect(() => {
     // Initialize the refs array
@@ -21,7 +55,7 @@ const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ items }) => {
       (entries) => {
         entries.forEach((entry) => {
           const video = entry.target as HTMLVideoElement;
-          
+
           if (entry.isIntersecting) {
             // Play video when it enters viewport
             video.play();
@@ -31,25 +65,25 @@ const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ items }) => {
               const videoHeight = video.videoHeight;
               const videoWidth = video.videoWidth;
               const aspectRatio = videoWidth / videoHeight;
-              
+
               // Calculate new dimensions to cover viewport while maintaining aspect ratio
               let newHeight = viewport;
               let newWidth = viewport * aspectRatio;
-              
+
               video.style.height = `${newHeight}px`;
               video.style.width = `${newWidth}px`;
-              video.style.objectFit = 'cover';
+              video.style.objectFit = "cover";
             };
-            
+
             // Adjust size when metadata is loaded
             if (video.readyState >= 1) {
               adjustVideoSize();
             } else {
-              video.addEventListener('loadedmetadata', adjustVideoSize);
+              video.addEventListener("loadedmetadata", adjustVideoSize);
             }
-            
+
             // Adjust on resize
-            window.addEventListener('resize', adjustVideoSize);
+            window.addEventListener("resize", adjustVideoSize);
           } else {
             // Pause video when it exits viewport
             video.pause();
@@ -75,7 +109,7 @@ const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ items }) => {
           observer.unobserve(videoRef);
         }
       });
-      window.removeEventListener('resize', () => {});
+      window.removeEventListener("resize", () => {});
     };
   }, [items]);
 
@@ -92,15 +126,15 @@ const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ items }) => {
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
   return (
-    <div className="h-screen overflow-y-scroll scroll-snap-y scroll-snap-mandatory">
+    <div className="h-full overflow-y-scroll scroll-snap-y scroll-snap-mandatory">
       {items.map((item: any, index: number) => (
         <div
           key={index}
-          className="h-screen scroll-snap-start flex justify-center items-center bg-black w-full border-b border-white relative"
+          className="h-full scroll-snap-start flex justify-center items-center bg-black w-full border-b border-white relative"
         >
           <div className="relative h-full w-full overflow-hidden">
             <video
-              ref={(el:any) => (videoRefs.current[index] = el)}
+              ref={(el: any) => (videoRefs.current[index] = el)}
               loop
               playsInline
               muted={isMuted}
@@ -108,10 +142,33 @@ const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ items }) => {
             >
               <source src={item} type="video/mp4" />
             </video>
+
             <div className="absolute top-0 left-0 text-white h-full w-full flex flex-col justify-between items-center bg-black bg-opacity-20 pb-6">
-              {/* Rest of your UI components remain the same */}
               <div className="flex justify-between items-center w-full">
-                <div></div>
+                <div className="p-5">
+                  <div className="md:hidden bg-black/50 px-2 py-[2px] rounded-sm flex justify-center items-center">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <button
+                          type="button"
+                          title="menu"
+                          className="focus:outline-none"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="36px"
+                            viewBox="0 -960 960 960"
+                            width="36px"
+                            fill="#EFEFEF"
+                          >
+                            <path d="M160-240q-17 0-28.5-11.5T120-280q0-17 11.5-28.5T160-320h640q17 0 28.5 11.5T840-280q0 17-11.5 28.5T800-240H160Zm0-200q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520h640q17 0 28.5 11.5T840-480q0 17-11.5 28.5T800-440H160Zm0-200q-17 0-28.5-11.5T120-680q0-17 11.5-28.5T160-720h640q17 0 28.5 11.5T840-680q0 17-11.5 28.5T800-640H160Z" />
+                          </svg>
+                        </button>
+                      </DialogTrigger>
+                      <DialogNavigation />
+                    </Dialog>
+                  </div>
+                </div>
                 <button
                   title="video-mute-unmute"
                   type="button"
@@ -140,22 +197,22 @@ const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ items }) => {
                       <Image
                         alt="thumbnail"
                         src="/sample_thumbnail.jpg"
-                        width={24}
-                        height={24}
+                        width={28}
+                        height={28}
                         className="rounded-full border border-white border-opacity-70 p-[1px]"
                       />
-                      <span className="text-base tracking-wide font-medium">
+                      <span className="text-base sm:text-lg tracking-wide font-medium">
                         Product Name
                       </span>
                       <button
                         type="button"
                         title="subscribe"
-                        className="px-3 py-1 text-sm text-white border border-white rounded-md tracking-wide font-medium"
+                        className="px-3 py-1 text-sm sm:text-base text-white border border-white rounded-md tracking-wide font-medium"
                       >
                         Subscribe
                       </button>
                     </div>
-                    <div className="flex flex-col justify-start items-start gap-2 text-white/85 text-sm text-justify p-2 bg-black bg-opacity-40 rounded-md">
+                    <div className="flex flex-col justify-start items-start gap-2 text-white/85 text-sm sm:text-base text-justify p-2 bg-black bg-opacity-40 rounded-md">
                       {fullDescription == index
                         ? description
                         : `${description.slice(0, 100)}...`}
@@ -166,7 +223,7 @@ const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ items }) => {
                             fullDescription == index ? null : index
                           );
                         }}
-                        className="text-white/70 text-sm tracking-wider font-semibold"
+                        className="text-white/70 text-sm sm:text-base tracking-wider font-semibold"
                       >
                         {fullDescription == index ? "Read less" : "Read more"}
                       </button>
@@ -187,7 +244,7 @@ const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ items }) => {
                       >
                         <path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
                       </svg>
-                      <span className="text-white tracking-wider text-xs">
+                      <span className="text-white tracking-wider text-xs sm:text-sm">
                         321
                       </span>
                     </button>
@@ -206,7 +263,7 @@ const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ items }) => {
                       >
                         <path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" />
                       </svg>
-                      <span className="text-white tracking-wider text-xs">
+                      <span className="text-white tracking-wider text-xs sm:text-sm">
                         Share
                       </span>
                     </button>
@@ -224,7 +281,7 @@ const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ items }) => {
                       >
                         <path d="M240-400h480v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM880-80 720-240H160q-33 0-56.5-23.5T80-320v-480q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v720ZM160-320h594l46 45v-525H160v480Zm0 0v-480 480Z" />
                       </svg>
-                      <span className="text-white tracking-wider text-xs">
+                      <span className="text-white tracking-wider text-xs sm:text-sm">
                         4321
                       </span>
                     </button>
@@ -232,7 +289,7 @@ const VerticalCarousel: React.FC<VerticalCarouselProps> = ({ items }) => {
                 </div>
                 <button
                   type="button"
-                  className="bg-slate-50 rounded-md px-5 py-2 w-10/12 text-base flex gap-4 justify-center items-center text-black tracking-wide font-semibold shadow-md"
+                  className="bg-slate-50 rounded-md px-5 py-2 w-10/12 sm:w-11/12 text-base sm:text-lg flex gap-4 justify-center items-center text-black tracking-wide font-semibold shadow-md"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
