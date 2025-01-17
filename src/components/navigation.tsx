@@ -18,7 +18,7 @@ const Navbar = () => {
 const DialogNavigation = () => {
   return (
     <>
-      <DialogContent className="bg-opacity-80 bg-white/85 text-black">
+      <DialogContent className="bg-opacity-80 bg-white/85 text-black w-[98%] rounded-sm">
         <DialogHeader>
           <DialogTitle className="hidden">Menu</DialogTitle>
           <DialogDescription className="hidden">

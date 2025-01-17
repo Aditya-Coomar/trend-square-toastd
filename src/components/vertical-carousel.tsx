@@ -1,21 +1,26 @@
-import React, { useEffect, useRef } from "react";
+import React, { use, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { DialogNavigation } from "@/components/navigation";
+import { videos } from "@/components/sample-data";
+import { useRouter } from "next/navigation";
 
-interface VerticalCarouselProps {
-  items: string[];
-}
+type CarouselItemProps = {
+  id: number;
+  videoUrl: string;
+  thumbnailUrl: string;
+  productName: string;
+  description: string;
+  likes: number;
+  comments: number;
+  subscribedByUser: boolean;
+  likedByUser: boolean;
+  productPageUrl: string;
+};
 
 const VerticalCarousel = () => {
-  const items = [
-    "/assets/video/video_5.mp4",
-    "/assets/video/video_1.mp4",
-    "/assets/video/video_2.mp4",
-    "/assets/video/video_3.mp4",
-    "/assets/video/video_4.mp4",
-  ];
-
+  const router = useRouter();
+  const [items, setItems] = React.useState<CarouselItemProps[]>(localStorage.getItem("demo-videos") ? JSON.parse(localStorage.getItem("demo-videos")!) : videos);
   const [isMuted, setIsMuted] = React.useState<boolean>(true);
   const [fullDescription, setFullDescription] = React.useState<any>(null);
   const [playingStates, setPlayingStates] = React.useState<boolean[]>(
@@ -45,6 +50,17 @@ const VerticalCarousel = () => {
       }
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem("demo-videos", JSON.stringify(items));
+  }, [items]);
+
+  useEffect(() => {
+    const savedVideos = localStorage.getItem("demo-videos");
+    if (savedVideos) {
+      setItems(JSON.parse(savedVideos));
+    }
+  }, []);
 
   useEffect(() => {
     // Initialize the refs array
@@ -122,12 +138,11 @@ const VerticalCarousel = () => {
     setIsMuted(!isMuted);
   };
 
-  const description =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+  console.log(items);
 
   return (
     <div className="h-full overflow-y-scroll scroll-snap-y scroll-snap-mandatory">
-      {items.map((item: any, index: number) => (
+      {items.map((item: CarouselItemProps, index: number) => (
         <div
           key={index}
           className="h-full scroll-snap-start flex justify-center items-center bg-black w-full border-b border-white relative"
@@ -140,29 +155,21 @@ const VerticalCarousel = () => {
               muted={isMuted}
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full"
             >
-              <source src={item} type="video/mp4" />
+              <source src={item.videoUrl} type="video/mp4" />
             </video>
 
             <div className="absolute top-0 left-0 text-white h-full w-full flex flex-col justify-between items-center bg-black bg-opacity-20 pb-6">
               <div className="flex justify-between items-center w-full">
-                <div className="p-5">
-                  <div className="md:hidden bg-black/50 px-2 py-[2px] rounded-sm flex justify-center items-center">
+                <div className="p-3">
+                  <div className="md:hidden bg-black/70 p-2 rounded-sm flex justify-center items-center">
                     <Dialog>
                       <DialogTrigger asChild>
                         <button
                           type="button"
                           title="menu"
-                          className="focus:outline-none"
+                          className="text-white nav-logo text-3xl"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="36px"
-                            viewBox="0 -960 960 960"
-                            width="36px"
-                            fill="#EFEFEF"
-                          >
-                            <path d="M160-240q-17 0-28.5-11.5T120-280q0-17 11.5-28.5T160-320h640q17 0 28.5 11.5T840-280q0 17-11.5 28.5T800-240H160Zm0-200q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520h640q17 0 28.5 11.5T840-480q0 17-11.5 28.5T800-440H160Zm0-200q-17 0-28.5-11.5T120-680q0-17 11.5-28.5T160-720h640q17 0 28.5 11.5T840-680q0 17-11.5 28.5T800-640H160Z" />
-                          </svg>
+                          TSq
                         </button>
                       </DialogTrigger>
                       <DialogNavigation />
@@ -202,20 +209,29 @@ const VerticalCarousel = () => {
                         className="rounded-full border border-white border-opacity-70 p-[1px]"
                       />
                       <span className="text-base sm:text-lg tracking-wide font-medium">
-                        Product Name
+                        {item.productName}
                       </span>
                       <button
                         type="button"
                         title="subscribe"
-                        className="px-3 py-1 text-sm sm:text-base text-white border border-white rounded-md tracking-wide font-medium"
+                        className={`px-3 py-1 text-sm sm:text-base border border-white rounded-md tracking-wide font-medium flex items-center ${
+                          item.subscribedByUser
+                            ? "bg-white text-black"
+                            : "text-white"
+                        }`}
+                        onClick={() => {
+                          const newItems = [...items];
+                          newItems[index].subscribedByUser = !item.subscribedByUser;
+                          setItems(newItems);
+                        }}
                       >
-                        Subscribe
+                        {item.subscribedByUser ? "Unsubscribe" : "Subscribe"}
                       </button>
                     </div>
                     <div className="flex flex-col justify-start items-start gap-2 text-white/85 text-sm sm:text-base text-justify p-2 bg-black bg-opacity-40 rounded-md">
                       {fullDescription == index
-                        ? description
-                        : `${description.slice(0, 100)}...`}
+                        ? item.description
+                        : `${item.description.slice(0, 100)}...`}
                       <button
                         type="button"
                         onClick={() => {
@@ -234,24 +250,50 @@ const VerticalCarousel = () => {
                       className="flex flex-col gap-1 items-center justify-center"
                       title="like-unlike-toggle"
                       type="button"
+                      onClick={() => {
+                        const newItems = [...items];
+                        if (item.likedByUser) {
+                          newItems[index].likes -= 1;
+
+                        } else {
+                          newItems[index].likes += 1;
+                        }
+                        newItems[index].likedByUser = !item.likedByUser;
+                        setItems(newItems);
+                      }}
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="32px"
-                        viewBox="0 -960 960 960"
-                        width="32px"
-                        fill="#ffffff"
-                      >
-                        <path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
-                      </svg>
+                      {item.likedByUser ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="32px"
+                          viewBox="0 -960 960 960"
+                          width="32px"
+                          fill="#EA3323"
+                        >
+                          <path d="M480-147q-14 0-28.5-5T426-168l-69-63q-106-97-191.5-192.5T80-634q0-94 63-157t157-63q53 0 100 22.5t80 61.5q33-39 80-61.5T660-854q94 0 157 63t63 157q0 115-85 211T602-230l-68 62q-11 11-25.5 16t-28.5 5Z" />
+                        </svg>
+                      ) : (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="32px"
+                          viewBox="0 -960 960 960"
+                          width="32px"
+                          fill="#ffffff"
+                        >
+                          <path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
+                        </svg>
+                      )}
                       <span className="text-white tracking-wider text-xs sm:text-sm">
-                        321
+                        {item.likes}
                       </span>
                     </button>
                     <button
                       className="flex flex-col gap-1 items-center justify-center"
                       title="send"
                       type="button"
+                      onClick={() => {
+                        alert("Share this video");
+                      }}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -282,7 +324,7 @@ const VerticalCarousel = () => {
                         <path d="M240-400h480v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM880-80 720-240H160q-33 0-56.5-23.5T80-320v-480q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v720ZM160-320h594l46 45v-525H160v480Zm0 0v-480 480Z" />
                       </svg>
                       <span className="text-white tracking-wider text-xs sm:text-sm">
-                        4321
+                        {item.comments}
                       </span>
                     </button>
                   </div>
@@ -290,6 +332,7 @@ const VerticalCarousel = () => {
                 <button
                   type="button"
                   className="bg-slate-50 rounded-md px-5 py-2 w-10/12 sm:w-11/12 text-base sm:text-lg flex gap-4 justify-center items-center text-black tracking-wide font-semibold shadow-md"
+                  onClick={() => router.push(item.productPageUrl)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
