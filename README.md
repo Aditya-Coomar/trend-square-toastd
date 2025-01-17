@@ -1,5 +1,33 @@
 <h1 align="center"> TrendSquare Application - Developer Documentation </h1> 
 
+## Table of Contents
+1. [Getting Started](#getting-started)
+   - [Prerequisites](#prerequisites)
+   - [Installation](#installation)
+   - [Viewing the Project](#viewing-the-project)
+     - [Local Development](#local-development)
+     - [Note](#note)
+     - [Live Deployment](#live-deployment)
+2. [Site Preview](#site-preview)
+   - [Home Page](#home-page)
+3. [Overview](#overview)
+4. [Technologies and Frameworks Used](#technologies-and-frameworks-used)
+5. [Thought Process Behind the Design](#thought-process-behind-the-design)
+   - [Purpose](#purpose)
+   - [User-Centric Features](#user-centric-features)
+6. [Key Design and Development Choices](#key-design-and-development-choices)
+   - [1. Dark Theme](#1-dark-theme)
+   - [2. Two-Panel Layout](#2-two-panel-layout)
+     - [Homepage](#homepage)
+     - [Product Page](#product-page)
+   - [3. Typography and Icons](#3-typography-and-icons)
+   - [4. Navigation and CTAs](#4-navigation-and-ctas)
+   - [5. Responsive Design](#5-responsive-design)
+   - [6. Content Organization](#6-content-organization)
+     - [Homepage](#homepage-1)
+     - [Product Page](#product-page-1)
+
+
 <!-- GETTING STARTED -->
 ## Getting Started
 ### Prerequisites
