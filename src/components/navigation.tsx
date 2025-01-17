@@ -4,6 +4,7 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   return (
@@ -16,6 +17,7 @@ const Navbar = () => {
 };
 
 const DialogNavigation = () => {
+  const router = useRouter();
   return (
     <>
       <DialogContent className="bg-opacity-80 bg-white/85 text-black w-[98%] rounded-sm">
@@ -27,12 +29,20 @@ const DialogNavigation = () => {
         </DialogHeader>
         <div className="flex flex-col justify-center items-center">
           {["Home", "Product", "About", "Contact"].map((item, index) => (
-            <div
+            <button
               className={`text-black/85 text-lg tracking-wide py-4 border-b border-black/10 w-full font-medium text-center`}
               key={index}
+              type="button"
+              onClick={() => {
+                if (item === "Home") {
+                  router.push("/");
+                } else {
+                  alert(`You clicked on ${item}`);
+                }
+              }}
             >
               {item}
-            </div>
+            </button>
           ))}
           <div className="text-black/85 text-lg tracking-wide py-5 w-full text-center font-medium">
             Sign In

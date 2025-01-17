@@ -2,6 +2,8 @@
 import Image from "next/image";
 import { useEffect, useState, use } from "react";
 import { videos } from "@/components/sample-data";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { DialogNavigation } from "@/components/navigation";
 
 type ProductProps = {
   id?: number;
@@ -72,9 +74,17 @@ const Product = ({ params }: { params: Promise<{ slug: number }> }) => {
                   />
                   {product ? product.productName : ""}
                 </div>
-                <div className="text-2xl sm:text-3xl md:text-5xl nav-logo text-white px-2 py-2 border border-white/20 shadow-md rounded-md">
-                  TSq
-                </div>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <button
+                      type="button"
+                      className="text-2xl sm:text-3xl md:text-5xl nav-logo text-white px-2 py-2 border border-white/20 shadow-md rounded-md"
+                    >
+                      TSq
+                    </button>
+                  </DialogTrigger>
+                  <DialogNavigation />
+                </Dialog>
               </div>
               <div className="text-justify w-full text-sm sm:text-base md:text-lg tracking-wide text-white/70 px-3 pr-5 mt-7 md:mt-10">
                 {product ? product.description : ""}
