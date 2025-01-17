@@ -4,6 +4,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { DialogNavigation } from "@/components/navigation";
 import { videos } from "@/components/sample-data";
 import { useRouter } from "next/navigation";
+import { RWebShare } from "react-web-share";
 
 type CarouselItemProps = {
   id: number;
@@ -301,28 +302,34 @@ const VerticalCarousel = () => {
                         {item.likes}
                       </span>
                     </button>
-                    <button
-                      className="flex flex-col gap-1 items-center justify-center"
-                      title="send"
-                      type="button"
-                      onClick={() => {
-                        alert("Share this video");
+                    <RWebShare
+                      data={{
+                        text: item.productName,
+                        url: item.productPageUrl,
+                        title: "Share",
                       }}
+                      onClick={() => console.log("share clicked")}
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="32px"
-                        viewBox="0 -960 960 960"
-                        className="-rotate-45"
-                        width="32px"
-                        fill="#ffffff"
+                      <button
+                        className="flex flex-col gap-1 items-center justify-center"
+                        title="send"
+                        type="button"
                       >
-                        <path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" />
-                      </svg>
-                      <span className="text-white tracking-wider text-xs sm:text-sm">
-                        Share
-                      </span>
-                    </button>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="32px"
+                          viewBox="0 -960 960 960"
+                          className="-rotate-45"
+                          width="32px"
+                          fill="#ffffff"
+                        >
+                          <path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" />
+                        </svg>
+                        <span className="text-white tracking-wider text-xs sm:text-sm">
+                          Share
+                        </span>
+                      </button>
+                    </RWebShare>
                     <button
                       className="flex flex-col gap-1 items-center justify-center"
                       title="send"
