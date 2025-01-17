@@ -55,9 +55,9 @@ After starting the development server:
 - If the project runs on a different port, you'll see the correct URL in your terminal after running `npm run dev`
 - For the best experience, use modern browsers like Chrome, Firefox, or Edge
 #### Live Deployment
-You can view the live version of the project at: [Visit Live Site](https://trend-square-toastd.vercel.app)
+You can view the live version of the project at: [Visit Live Site](https://trend-square.vercel.app)
 ```
-https://trend-square-toastd.vercel.app
+https://trend-square.vercel.app
 ```
 
 ## Site Preview
