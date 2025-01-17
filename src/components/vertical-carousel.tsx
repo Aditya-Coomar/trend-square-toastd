@@ -133,7 +133,7 @@ const VerticalCarousel = () => {
       {items.map((item: CarouselItemProps, index: number) => (
         <div
           key={index}
-          className="h-full scroll-snap-start flex justify-center items-center bg-black w-full border-b border-white relative"
+          className="h-full scroll-snap-start flex justify-center items-center bg-black w-full border-b border-white/80 relative"
         >
           <div className="relative h-full w-full overflow-hidden">
             <video
