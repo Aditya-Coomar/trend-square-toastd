@@ -9,7 +9,7 @@ const videos = [
     likes: 1234,
     comments: 4321,
     subscribedByUser: true,
-    likedByUser: false,
+    likedByUser: true,
     productPageUrl: "/product/1",
     imageUrl: "/assets/image/img_1.jpg",
   },
@@ -66,7 +66,7 @@ const videos = [
     comments: 4321,
     subscribedByUser: true,
     likedByUser: true,
-    productPageUrl: "/product/1",
+    productPageUrl: "/product/5",
     imageUrl: "/assets/image/img_5.jpg",
   },
 ];

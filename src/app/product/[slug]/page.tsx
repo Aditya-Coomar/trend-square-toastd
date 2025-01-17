@@ -40,7 +40,7 @@ const Product = ({ params }: { params: Promise<{ slug: number }> }) => {
     return setProduct(filterProductById(videos, parseInt(productID)) || {});
   }, [productID]);
 
-  console.log(product);
+  
   return (
     <>
       <div className="h-screen overflow-hidden bg-black grid grid-cols-1 lg:grid-cols-2">
