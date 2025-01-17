@@ -1,3 +1,5 @@
+<h1 align="center"> TrendSquare Application - Developer Documentation </h1> 
+
 <!-- GETTING STARTED -->
 ## Getting Started
 ### Prerequisites
@@ -43,7 +45,72 @@ https://trend-square-toastd.vercel.app
 ![image](https://github.com/user-attachments/assets/25a67406-2666-4a8a-8711-847f9809d08f)
 
 
-### Product Details
-#### Individual product pages show detailed information, including product description, pricing, and user engagement statistics.
-![image](https://github.com/user-attachments/assets/ec7fdc15-379c-4696-9151-61bb33948734)
+## Overview
+The TrendSquare application is a dynamic platform designed to showcase the latest trends in fashion, beauty, and lifestyle. This documentation outlines the thought process, design choices, and functionality decisions made during development to ensure a seamless and engaging user experience.
+
+## Technologies and Frameworks Used
+
+- **HTML5, CSS3, TypeScript**: For the core structure and interactive elements.
+- **NextJS**: Component-based architecture to enable a dynamic and modular UI.
+- **Shadcn UI**: UI library for consistent UI design of elements.
+- **Google Fonts and Icons**: Icon and Font Library.
+- **Tailwind CSS**: For scalable and maintainable styling.
+
+
+## Thought Process Behind the Design
+
+### Purpose
+The goal of TrendSquare is to:
+- Provide users with an interactive and visually rich experience.
+- Facilitate product discovery, personalization, and e-commerce functionality.
+- Utilize modern design principles to ensure clarity, usability, and responsiveness.
+
+### User-Centric Features
+1. **Engagement**: Features like "Upvotes," "Loved by You," and "Add to Wishlist" enable users to interact with products and create a personalized catalog.
+2. **Exploration**: The split-screen design with categories and video previews ensures users can quickly navigate and explore trending products.
+3. **Purchase Readiness**: Detailed product pages with clear CTAs ("Add to Cart," "Buy Product") simplify the buying process.
+
+
+
+## Key Design and Development Choices
+
+### 1. Dark Theme
+- **Purpose**: Enhances visual contrast, focuses attention on images/videos, and evokes a sense of luxury.
+- **Implementation**: Used a dark color palette with accent highlights for buttons and icons to ensure readability and clarity.
+
+### 2. Two-Panel Layout
+#### Homepage:
+- **Left Panel**: Displays categories with icons for easy navigation.
+- **Right Panel**: Features video previews of products for visual storytelling.
+
+#### Product Page:
+- **Left Panel**: High-resolution product images displayed in a grid format.
+- **Right Panel**: Comprehensive product details, engagement metrics, and CTAs.
+
+### 3. Typography and Icons
+- **Typography**:
+  - Clean, sans-serif fonts chosen for readability on various screen sizes.
+  - Font sizes and weights adjusted for hierarchy and emphasis (e.g., product names vs. descriptions).
+- **Icons**:
+  - Universal symbols like hearts, share icons, and cart icons improve usability and align with user expectations.
+
+### 4. Navigation and CTAs
+- **Prominent Buttons and Links**:
+  - "Add to Wishlist," "Buy Product," and "Add to Cart" encourage user action.
+  - "Visit Product Page" for more details enables deeper exploration.
+- **Logical Content Flow**: Ensures users can easily locate what they need without unnecessary distractions.
+
+### 5. Responsive Design
+- **Mobile First**: Layouts and features designed with mobile users in mind and scaled for larger screens.
+- **Flexbox/Grid**: CSS Grid and Flexbox used to implement adaptive layouts and maintain consistency across devices.
+
+### 6. Content Organization
+#### Homepage:
+- Focused on visual engagement with categories and video previews.
+- Subtle hover effects and animations guide user interactions.
+
+#### Product Page:
+- Organized with clear separation between visual content (images) and textual information (product details).
+- Price, reviews, and upvotes displayed prominently for quick decision-making.
+
 
