@@ -13,7 +13,7 @@
 
 1. Clone the repo
    ```sh
-   git clone [https://github.com/Cherry-Network/CherryPlusWebsite.git](https://github.com/Aditya-Coomar/trend-square-toastd.git)
+   git clone https://github.com/Aditya-Coomar/trend-square-toastd.git
    ```
 2. Install NPM packages
    ```sh
