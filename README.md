@@ -6,7 +6,6 @@
    - [Installation](#installation)
    - [Viewing the Project](#viewing-the-project)
      - [Local Development](#local-development)
-     - [Note](#note)
      - [Live Deployment](#live-deployment)
 2. [Site Preview](#site-preview)
    - [Home Page](#home-page)
@@ -18,15 +17,10 @@
 6. [Key Design and Development Choices](#key-design-and-development-choices)
    - [1. Dark Theme](#1-dark-theme)
    - [2. Two-Panel Layout](#2-two-panel-layout)
-     - [Homepage](#homepage)
-     - [Product Page](#product-page)
    - [3. Typography and Icons](#3-typography-and-icons)
    - [4. Navigation and CTAs](#4-navigation-and-ctas)
    - [5. Responsive Design](#5-responsive-design)
    - [6. Content Organization](#6-content-organization)
-     - [Homepage](#homepage-1)
-     - [Product Page](#product-page-1)
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
