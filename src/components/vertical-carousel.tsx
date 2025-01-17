@@ -20,7 +20,7 @@ type CarouselItemProps = {
 
 const VerticalCarousel = () => {
   const router = useRouter();
-  const [items, setItems] = React.useState<CarouselItemProps[]>(localStorage.getItem("demo-videos") ? JSON.parse(localStorage.getItem("demo-videos")!) : videos);
+  const [items, setItems] = React.useState<CarouselItemProps[]>(videos);
   const [isMuted, setIsMuted] = React.useState<boolean>(true);
   const [fullDescription, setFullDescription] = React.useState<any>(null);
   const [playingStates, setPlayingStates] = React.useState<boolean[]>(
@@ -50,17 +50,6 @@ const VerticalCarousel = () => {
       }
     }
   };
-
-  useEffect(() => {
-    localStorage.setItem("demo-videos", JSON.stringify(items));
-  }, [items]);
-
-  useEffect(() => {
-    const savedVideos = localStorage.getItem("demo-videos");
-    if (savedVideos) {
-      setItems(JSON.parse(savedVideos));
-    }
-  }, []);
 
   useEffect(() => {
     // Initialize the refs array
