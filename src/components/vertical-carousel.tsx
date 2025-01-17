@@ -5,6 +5,7 @@ import { DialogNavigation } from "@/components/navigation";
 import { videos } from "@/components/sample-data";
 import { useRouter } from "next/navigation";
 import { RWebShare } from "react-web-share";
+import { it } from "node:test";
 
 type CarouselItemProps = {
   id: number;
@@ -17,6 +18,7 @@ type CarouselItemProps = {
   subscribedByUser: boolean;
   likedByUser: boolean;
   productPageUrl: string;
+  imageUrl: string;
 };
 
 const VerticalCarousel = () => {
@@ -306,7 +308,7 @@ const VerticalCarousel = () => {
                       data={{
                         text: item.productName,
                         url: item.productPageUrl,
-                        title: "Share",
+                        title: item.productName,
                       }}
                       onClick={() => console.log("share clicked")}
                     >

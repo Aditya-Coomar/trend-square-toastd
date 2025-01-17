@@ -1,7 +1,7 @@
 const videos = [
   {
     id: 1,
-    videoUrl: "/assets/video/video_5.mp4",
+    videoUrl: "/assets/video/video_1.mp4",
     thumbnailUrl: "/sample_thumbnail.jpg",
     productName: "Product Name 1",
     description:
@@ -9,8 +9,9 @@ const videos = [
     likes: 1234,
     comments: 4321,
     subscribedByUser: true,
-    likedByUser: true,
+    likedByUser: false,
     productPageUrl: "/product/1",
+    imageUrl: "/assets/image/img_1.jpg",
   },
   {
     id: 2,
@@ -24,6 +25,7 @@ const videos = [
     subscribedByUser: false,
     likedByUser: false,
     productPageUrl: "/product/2",
+    imageUrl: "/assets/image/img_2.jpg",
   },
   {
     id: 3,
@@ -37,6 +39,7 @@ const videos = [
     subscribedByUser: true,
     likedByUser: true,
     productPageUrl: "/product/3",
+    imageUrl: "/assets/image/img_3.jpg",
   },
   {
     id: 4,
@@ -50,10 +53,11 @@ const videos = [
     subscribedByUser: false,
     likedByUser: false,
     productPageUrl: "/product/4",
+    imageUrl: "/assets/image/img_4.jpg",
   },
   {
     id: 5,
-    videoUrl: "/assets/video/video_1.mp4",
+    videoUrl: "/assets/video/video_5.mp4",
     thumbnailUrl: "/sample_thumbnail.jpg",
     productName: "Product Name 5",
     description:
@@ -61,8 +65,9 @@ const videos = [
     likes: 1234,
     comments: 4321,
     subscribedByUser: true,
-    likedByUser: false,
-    productPageUrl: "/product/5",
+    likedByUser: true,
+    productPageUrl: "/product/1",
+    imageUrl: "/assets/image/img_5.jpg",
   },
 ];
 
