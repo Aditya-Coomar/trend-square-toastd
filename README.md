@@ -9,6 +9,7 @@
      - [Live Deployment](#live-deployment)
 2. [Site Preview](#site-preview)
    - [Home Page](#home-page)
+   - [Product Page](#product-details)
 3. [Overview](#overview)
 4. [Technologies and Frameworks Used](#technologies-and-frameworks-used)
 5. [Thought Process Behind the Design](#thought-process-behind-the-design)
@@ -65,6 +66,10 @@ https://trend-square.vercel.app
 ### Home Page
 #### The home page displays a grid of trending products with video previews and interaction metrics.
 ![image](https://github.com/user-attachments/assets/25a67406-2666-4a8a-8711-847f9809d08f)
+
+### Product Details
+#### Shows detailed information, including product description, pricing, and user engagement statistics.
+![image](https://github.com/user-attachments/assets/d32f8653-1fca-4b8f-904d-8f66af609f65)
 
 
 ## Overview
